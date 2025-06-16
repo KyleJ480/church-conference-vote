@@ -1,5 +1,5 @@
 // --- CONFIGURATION ---
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbweKHtpf5a4wAEV5gWBMIjS83siWiXHp00NHX8u4h9vjoY1oTZpweQeDRJ3qU7edYwzWA/exec"; // Replace this with your new URL!
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyiAuM2uCtLq1kFclzkw5RphlFg6GKMrXVhr5as5fwPzKrWd27HvKm2heX3YbEGmKMeUg/exec"; // Replace this with your new URL!
 
 // --- GET ELEMENTS FROM THE PAGE ---
 const form = document.getElementById('voteForm');
@@ -7,12 +7,18 @@ const candidateListDiv = document.getElementById('candidateList');
 const voterCodeInput = document.getElementById('voterCode');
 const statusMessage = document.getElementById('statusMessage');
 const submitButton = document.getElementById('submitButton');
+const mainTitle = document.querySelector('h1');
+const instructions = document.getElementById('instructions');
+
 
 // --- MAIN LOGIC ---
 
 document.addEventListener('DOMContentLoaded', () => {
-    loadCodeFromURL();
-    loadCandidates();
+    // We now wait for the code to be loaded before fetching candidates
+    const code = loadCodeFromURL();
+    if (code) {
+        loadPageData(code);
+    }
 });
 
 function loadCodeFromURL() {
@@ -20,16 +26,29 @@ function loadCodeFromURL() {
     const code = urlParams.get('code');
     if (code) {
         voterCodeInput.value = code;
+        return code;
     } else {
         document.body.innerHTML = '<h1>Error: Invalid Link</h1><p>Please use the unique link that was emailed to you. Do not visit the website directly.</p>';
+        return null;
     }
 }
 
-async function loadCandidates() {
+// *** RENAMED & REWRITTEN FUNCTION ***
+async function loadPageData(voterCode) {
     try {
-        const response = await fetch(SCRIPT_URL);
+        // We now send the voter's code when fetching candidates to check their status
+        const initialUrl = `${SCRIPT_URL}?code=${encodeURIComponent(voterCode)}`;
+        const response = await fetch(initialUrl);
         const data = await response.json();
         console.log('Data received from script:', data);
+
+        // *** NEW PART: Check if the user has already voted ***
+        if (data.hasVoted === true) {
+            mainTitle.textContent = 'Thank You For Voting!';
+            instructions.textContent = 'Your vote for this election has already been recorded. There is no need to vote again.';
+            form.style.display = 'none'; // This hides the radio buttons and submit button
+            return; // Stop the function here
+        }
 
         if (data.status === 'success' && data.candidates.length > 0) {
             candidateListDiv.innerHTML = '';
@@ -50,12 +69,12 @@ async function loadCandidates() {
             candidateListDiv.innerHTML = `<p style="color: red;">Could not load candidates. ${data.message || ''}</p>`;
         }
     } catch (error) {
-        console.error('Error loading candidates:', error);
+        console.error('Error loading page data:', error);
         candidateListDiv.innerHTML = '<p style="color: red;">A network error occurred. Please check your connection and refresh.</p>';
     }
 }
 
-// *** REWRITTEN VOTE SUBMISSION LOGIC ***
+// Vote submission logic remains the same
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
     submitButton.disabled = true;
@@ -74,10 +93,7 @@ form.addEventListener('submit', async (e) => {
     }
 
     try {
-        // Build the URL with all the data in the query string
         const submissionUrl = `${SCRIPT_URL}?action=submitVote&code=${encodeURIComponent(voterCode)}&vote=${encodeURIComponent(selectedCandidate)}`;
-        
-        // Make a simple GET request
         const response = await fetch(submissionUrl);
         const result = await response.json();
 
@@ -85,7 +101,8 @@ form.addEventListener('submit', async (e) => {
         if (result.status === 'success') {
             statusMessage.className = 'success';
             form.style.display = 'none';
-            document.getElementById('instructions').style.display = 'none';
+            instructions.textContent = 'Your vote has been successfully recorded.';
+            mainTitle.textContent = 'Thank You!';
         } else {
             statusMessage.className = 'error';
             submitButton.disabled = false;

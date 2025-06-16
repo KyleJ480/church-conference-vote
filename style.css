@@ -1,0 +1,103 @@
+/* General styles for the whole page */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* The main container for our content */
+main {
+    background-color: white;
+    padding: 2em;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 500px;
+}
+
+h1 {
+    color: #005a9c; /* A nice church blue */
+    text-align: center;
+    margin-top: 0;
+}
+
+p {
+    line-height: 1.6;
+}
+
+/* Styles for the candidate list */
+#candidateList {
+    margin: 2em 0;
+}
+
+.candidate-option {
+    display: block;
+    margin-bottom: 1em;
+    padding: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.candidate-option:hover {
+    background-color: #eef7ff;
+}
+
+.candidate-option input[type="radio"] {
+    margin-right: 10px;
+}
+
+/* The submit button */
+button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 1em;
+    background-color: #28a745; /* A positive green */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button[type="submit"]:hover {
+    background-color: #218838;
+}
+
+/* A special style for when the button is disabled */
+button[type="submit"]:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
+
+/* Status message for success or errors */
+#statusMessage {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 1em;
+    padding: 1em;
+    border-radius: 5px;
+    display: none; /* Hidden by default */
+}
+
+#statusMessage.success {
+    background-color: #d4edda;
+    color: #155724;
+    display: block;
+}
+
+#statusMessage.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    display: block;
+}

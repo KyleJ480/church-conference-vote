@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conference Vote</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <h1>Conference Leadership Vote</h1>
+        <p id="instructions">Please select one candidate below and submit your vote.</p>
+        
+        <form id="voteForm">
+            <!-- The list of candidates will be dynamically inserted here by JavaScript -->
+            <div id="candidateList">
+                <p>Loading candidates...</p>
+            </div>
+
+            <!-- This input is hidden but holds the unique code from the URL -->
+            <input type="hidden" id="voterCode" name="voterCode">
+            
+            <button type="submit" id="submitButton" disabled>Submit My Vote</button>
+        </form>
+        
+        <p id="statusMessage"></p>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

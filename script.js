@@ -1,5 +1,5 @@
 // --- CONFIGURATION ---
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw36u9UPr0gUPxvSsU-PVM-BJgD8DoKp_pMJEn5F4JJQY3D9SqAD0TlRz1eFfnkcFytmA/exec"; // Replace this with your new URL!
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwG9btUcWfzRjMd1ndtsSgyO6ARqP-Z-fVHe4z2JEhqvRouctZ2UOw6zPaQ1p1VsMdhPw/exec"; // Replace this with your new URL!
 
 // --- GET ELEMENTS FROM THE PAGE ---
 const form = document.getElementById('voteForm');

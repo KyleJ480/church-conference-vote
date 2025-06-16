@@ -1,6 +1,6 @@
 // --- CONFIGURATION ---
 // PASTE THE WEB APP URL YOU COPIED FROM GOOGLE APPS SCRIPT HERE
-const SCRIPT_URL = "https://script.google.com/macros/s/YOUR_UNIQUE_ID/exec"; 
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzyl5USyjtrzQKem6wHEEyHDLkevPFb1cmmVqq9cUl8rvwR0a1bbCpenewXPfv5xI5_eg/exec"; 
 
 // --- GET ELEMENTS FROM THE PAGE ---
 const form = document.getElementById('voteForm');

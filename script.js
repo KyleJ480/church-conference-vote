@@ -1,6 +1,6 @@
 // --- CONFIGURATION ---
 // PASTE THE WEB APP URL YOU COPIED FROM GOOGLE APPS SCRIPT HERE
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzO_PlC5wJSXwyrvil_IHwRcjKouMFGO-OGKXis5h4ln0aF7Savj16MfUv0c4e4EHtLCg/exec"; 
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzO_JQhJYC_sOppPWWPFx0RN1UNibxu8-Io95BuoSiv5Zj7pbkMrXV7K1dG1BNBpc_asQ/exec"; 
 
 // --- GET ELEMENTS FROM THE PAGE ---
 const form = document.getElementById('voteForm');
@@ -34,7 +34,7 @@ async function loadCandidates() {
     try {
         const response = await fetch(SCRIPT_URL);
         const data = await response.json();
-
+        console.log('Data received from script:', data);
         if (data.status === 'success' && data.candidates.length > 0) {
             candidateListDiv.innerHTML = ''; // Clear the "Loading..." message
             data.candidates.forEach(candidateName => {
